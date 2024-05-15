@@ -1,0 +1,18 @@
+version: "1.0"
+nodes:
+  - name: AnotherNode
+    namespace: Test
+    attributes:
+      - name: name
+        kind: Text
+        optional: false
+        unique: true
+    relationships:
+      - name: node
+        peer: TestNode
+        kind: Attribute
+        cardinality: one
+      - name: other_node
+        peer: TestOtherNode
+        kind: Attribute
+        cardinality: one
