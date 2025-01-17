@@ -1,0 +1,14 @@
+query InterfaceQuery($hostname: String!) {
+  NetworkInterface(device__hostname__value: $hostname) {
+    edges {
+        node {
+            name {
+            value
+            }
+            description {
+            value
+            }
+        }
+    }
+  }
+}

@@ -1,3 +1,22 @@
 ---
 schemas:
-  - "schema.yml"
+  - ./schema.yml
+
+jinja2_transforms:
+  - name: interface_transform
+    description: "generate interface configuration"
+    query: "interface_query"
+    template_path: "transforms/interface_tpl.j2"
+
+queries:
+  - name: interface_query
+    file_path: "transforms/interface_query.gql"
+
+artifact_definitions:
+  - name: Interface_configuration
+    artifact_name: "interface_configuration"
+    parameters:
+      hostname: "hostname__value"
+    content_type: "text/plain"
+    targets: "AllDevices"
+    transformation: "interface_transform"

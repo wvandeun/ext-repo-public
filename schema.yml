@@ -1,18 +1,102 @@
+---
 version: "1.0"
 nodes:
-  - name: AnotherNode
-    namespace: Test
+  - name: Manufacturer
+    namespace: Network
+    # this is for graphql queries to be more human friendly
+    human_friendly_id: ["name__value"]
+    # this is for drop down lists to be more human friendly
+    display_labels:
+      - name__value
     attributes:
       - name: name
         kind: Text
         optional: false
         unique: true
+      - name: description
+        kind: TextArea
+        optional: true
     relationships:
-      - name: node
-        peer: TestNode
-        kind: Attribute
+      - name: devicetypes
         cardinality: one
-      - name: other_node
-        peer: TestOtherNode
-        kind: Attribute
+        peer: NetworkDevicetype
+        kind: Component
+
+  - name: Devicetype
+    namespace: Network
+    human_friendly_id: ["name__value"]
+    display_labels:
+      - name__value
+    attributes:
+      - name: name
+        kind: Text
+        optional: false
+        unique: true
+      - name: description
+        kind: TextArea
+        optional: true
+    relationships:
+      - name: manufacturer
         cardinality: one
+        peer: NetworkManufacturer
+        identifier:
+        optional: false
+        kind: Attribute
+
+  - name: Deviceroles
+    namespace: Network
+    human_friendly_id: ["name__value"]
+    display_labels:
+      - name__value
+    attributes:
+      - name: name
+        kind: Text
+        optional: false
+        unique: true
+      - name: description
+        kind: TextArea
+        optional: true
+
+  - name: Device
+    namespace: Network
+    human_friendly_id: ["hostname__value"]
+    inherit_from:
+      - CoreArtifactTarget
+    display_labels:
+      - hostname__value
+    attributes:
+      - name: hostname
+        kind: Text
+        unique: true
+      - name: serialnumber
+        kind: Text
+        optional: true
+        unique: true
+    relationships:
+      - name: device_type
+        cardinality: one
+        peer: NetworkDevicetype
+        kind: Component
+      - name: device_role
+        cardinality: one
+        peer: NetworkDeviceroles
+        kind: Component
+      - name: interfaces
+        cardinality: many
+        peer: NetworkInterface
+        kind: Component
+
+  - name: Interface
+    namespace: Network
+    attributes:
+      - name: name
+        kind: Text
+      - name: description
+        kind: Text
+        optional: true
+    relationships:
+      - name: device
+        cardinality: one
+        peer: NetworkDevice
+        optional: false
+        kind: Parent

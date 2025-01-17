@@ -1,0 +1,8 @@
+{% if data.NetworkInterface.edges and data.NetworkInterface.edges is iterable %}
+{% for interface in data["NetworkInterface"]["edges"] %}
+{% set interface_name = interface.node.name.value %}
+{% set interface_description = interface.node.description.value %}
+{{ interface_name }}
+   description: {{ interface_description }}
+{% endfor %}
+{% endif %}
