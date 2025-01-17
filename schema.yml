@@ -60,8 +60,6 @@ nodes:
   - name: Device
     namespace: Network
     human_friendly_id: ["hostname__value"]
-    inherit_from:
-      - CoreArtifactTarget
     display_labels:
       - hostname__value
     attributes:
